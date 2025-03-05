@@ -58,7 +58,8 @@ const Addsunglasses = () => {
       const y = leftEye[0]._y - glassesHeight / 3;
 
       const sunglasses = new Image();
-      sunglasses.src = "https://www.pinclipart.com/picdir/big/554-5547309_sticker-goggles-sunglasses-eyewear-sunglass-free-download-sunglasses.png"; // Transparent sunglasses PNG
+      // sunglasses.src = "https://www.pinclipart.com/picdir/big/554-5547309_sticker-goggles-sunglasses-eyewear-sunglass-free-download-sunglasses.png"; // Transparent sunglasses PNG
+      sunglasses.src = "https://openclipart.org/image/2400px/svg_to_png/236678/Red-Sunglasses.png"; // Transparent sunglasses PNG
       sunglasses.onload = () => {
         ctx.drawImage(sunglasses, x, y, glassesWidth, glassesHeight);
         setIsLoading(false);
