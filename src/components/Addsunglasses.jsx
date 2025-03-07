@@ -1,21 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 
-const Addsunglasses = () => {
-  const [imageSrc, setImageSrc] = useState(null);
+const Addsunglasses = ({ imgsrc }) => {
+  const [imageSrc, setImageSrc] = useState(imgsrc);
   const [isLoading, setIsLoading] = useState(false);
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
 
   // Handle image upload
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => setImageSrc(reader.result);
-      reader.readAsDataURL(file);
-    }
-  };
+  useEffect(() => {
+    const handleImageUpload = () => {
+      setImageSrc(imgsrc);
+    };
+
+    handleImageUpload();
+  }, [imgsrc]);
 
   // Load models and apply sunglasses
   const addSunglasses = async () => {
@@ -35,7 +34,7 @@ const Addsunglasses = () => {
 
       // Load models from CDN
       const MODEL_URL = "https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights";
-      
+
       await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
       await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
 
@@ -58,7 +57,6 @@ const Addsunglasses = () => {
       const y = leftEye[0]._y - glassesHeight / 3;
 
       const sunglasses = new Image();
-      // sunglasses.src = "https://www.pinclipart.com/picdir/big/554-5547309_sticker-goggles-sunglasses-eyewear-sunglass-free-download-sunglasses.png"; // Transparent sunglasses PNG
       sunglasses.src = "https://openclipart.org/image/2400px/svg_to_png/236678/Red-Sunglasses.png"; // Transparent sunglasses PNG
       sunglasses.onload = () => {
         ctx.drawImage(sunglasses, x, y, glassesWidth, glassesHeight);
@@ -73,20 +71,12 @@ const Addsunglasses = () => {
 
   return (
     <div className="p-4 text-center">
-      <input 
-        type="file" 
-        accept="image/*" 
-        onChange={handleImageUpload} 
-        className="mb-4"
-        disabled={isLoading}
-      />
-      <button 
-        onClick={addSunglasses} 
-        className={`px-4 py-2 rounded ${
-          isLoading 
-            ? 'bg-gray-400 cursor-not-allowed' 
+      <button
+        onClick={addSunglasses}
+        className={`px-4 py-2 rounded ${isLoading
+            ? 'bg-gray-400 cursor-not-allowed'
             : 'bg-blue-500 hover:bg-blue-600'
-        } text-white transition-colors`}
+          } text-white transition-colors`}
         disabled={isLoading || !imageSrc}
       >
         {isLoading ? (
@@ -101,15 +91,15 @@ const Addsunglasses = () => {
       </button>
       {imageSrc && (
         <div style={{ position: "relative", display: "inline-block", marginTop: "20px" }}>
-          <img 
-            ref={imageRef} 
-            src={imageSrc} 
-            alt="Face" 
-            style={{ display: "block", maxWidth: "100%" }} 
+          <img
+            ref={imageRef}
+            src={imageSrc}
+            alt="Face"
+            style={{ display: "block", maxWidth: "100%" }}
           />
-          <canvas 
-            ref={canvasRef} 
-            style={{ position: "absolute", top: 0, left: 0 }} 
+          <canvas
+            ref={canvasRef}
+            style={{ position: "absolute", top: 0, left: 0 }}
           />
         </div>
       )}

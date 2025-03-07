@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <Bg_remover></Bg_remover>
-      <Addsunglasses></Addsunglasses>
+      {/* <Addsunglasses></Addsunglasses> */}
     </div>
 
   );
