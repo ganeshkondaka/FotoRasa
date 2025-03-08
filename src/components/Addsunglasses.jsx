@@ -57,9 +57,13 @@ const Addsunglasses = ({ imgsrc }) => {
       const y = leftEye[0]._y - glassesHeight / 3;
 
       const sunglasses = new Image();
+      // sunglasses.src = "https://www.pinclipart.com/picdir/big/554-5547309_sticker-goggles-sunglasses-eyewear-sunglass-free-download-sunglasses.png"; // Transparent sunglasses PNG
       sunglasses.src = "https://openclipart.org/image/2400px/svg_to_png/236678/Red-Sunglasses.png"; // Transparent sunglasses PNG
       sunglasses.onload = () => {
         ctx.drawImage(sunglasses, x, y, glassesWidth, glassesHeight);
+
+
+        
         setIsLoading(false);
       };
     } catch (error) {
@@ -74,8 +78,8 @@ const Addsunglasses = ({ imgsrc }) => {
       <button
         onClick={addSunglasses}
         className={`px-4 py-2 rounded ${isLoading
-            ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-blue-500 hover:bg-blue-600'
+          ? 'bg-gray-400 cursor-not-allowed'
+          : 'bg-blue-500 hover:bg-blue-600'
           } text-white transition-colors`}
         disabled={isLoading || !imageSrc}
       >
